@@ -5,5 +5,6 @@ export const RESPONSE_MESSAGE = {
   USER_NOT_FOUND: "User not found",
   SERVER_ERROR: "Something went wrong",
   USER_CREATED_SUCCESS: "User created successfully",
+  USER_ALREADY_EXISTS: "User already exists",
   
 };

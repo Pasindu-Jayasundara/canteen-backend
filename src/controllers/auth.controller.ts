@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { registerUser, loginUser } from "../services/auth.service.js";
 import { HTTP_STATUS } from "../const/http-status.const.js";
-import { RESPONSE_MESSAGE } from "../const/response.cont.js";
+import { RESPONSE_MESSAGE } from "../const/response.const.js";
 
 export const register = async (req: Request, res: Response) => {
   try {
