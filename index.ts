@@ -1,7 +1,10 @@
 import express from "express";
-import { connectDB } from "./src/config/db.js";
-import authRoutes from "./src/routes/auth.routes.js";
+import authRoutes from "./src/routes/auth.routes.ts";
 import cors from "cors";
+import { connectDB } from "./src/config/db.ts";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;

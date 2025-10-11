@@ -1,6 +1,5 @@
 interface User{
-    email: string;
-    password: string;
+    universityMail: string;
 }
 
-export default User;
+export type { User };
