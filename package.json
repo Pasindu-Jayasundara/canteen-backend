@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "dev": "ts-node-esm index.ts",
+    "dev": "nodemon --exec ts-node-esm index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },

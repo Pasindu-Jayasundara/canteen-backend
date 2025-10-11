@@ -18,8 +18,8 @@ export const registerUser = async (universityMail: string, password: string): Pr
 
 export const loginUser = async (universityMail: string): Promise<User> => {
 
-  const newUser = new userModel({ universityMail });
-  await newUser.save();
+  // const newUser = new userModel({ universityMail });
+  // await newUser.save();
 
   const user = await userModel.findOne({ universityMail });
   if (!user) throw new Error(RESPONSE_MESSAGE.USER_NOT_FOUND);

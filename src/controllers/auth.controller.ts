@@ -22,7 +22,7 @@ export const login = async (req: Request, res: Response) => {
     const { universityMail } = req.body;
     const user = await loginUser(universityMail);
 
-    res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGE.LOGIN_SUCCESS, user });
+    res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGE.LOGIN_SUCCESS, user: JSON.stringify(user) });
 
   } catch (err: any) {
     res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: err.message });
