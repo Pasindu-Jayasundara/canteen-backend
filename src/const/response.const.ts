@@ -7,5 +7,7 @@ export const RESPONSE_MESSAGE = {
   SERVER_ERROR: "Something went wrong",
   USER_CREATED_SUCCESS: "User created successfully",
   USER_ALREADY_EXISTS: "User already exists",
+  VERIFY_OTP: "Verify OTP",
+  INVALID_OTP: "Invalid OTP",
   
 };

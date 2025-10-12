@@ -17,12 +17,20 @@ console.log("Redis Password:", process.env.REDIS_PASSWORD ? "Provided" : "Not Pr
 
 RedisClient.on('error', err => console.log('Redis Client Error', err));
 
-export const Redis_addValue = async(key:string, value:string) : Promise<void> => {
-    await RedisClient.SADD(key, value);
+export const Redis_addValue = async(key:string, value:string, expirationInSeconds: number) : Promise<void> => {
+    await RedisClient.sAdd(key, value);
+};
+
+export const Redis_addExpireValue = async(key:string, value:string, expirationInSeconds: number) : Promise<void> => {
+    await RedisClient.SETEX(key, expirationInSeconds, value);
 };
 
 export const Redis_getAllValues = async(key:string) :Promise<string[]> =>{
     return await RedisClient.SMEMBERS(key) as string[];
+};
+
+export const Redis_getValue = async(key:string) :Promise<string> =>{
+    return await RedisClient.GET(key) as string;
 };
 
 export const Redis_removeValue = async(key:string, value:string) : Promise<void> => {
