@@ -1,8 +1,10 @@
-import express from "express";
+import express, { response } from "express";
 import authRoutes from "./src/routes/auth.routes.ts";
 import cors from "cors";
 import { connectDB } from "./src/config/db.ts";
 import dotenv from "dotenv";
+import ExpressMongoSanitize from "express-mongo-sanitize";
+import {RedisClient} from "./src/services/redis.service.ts";
 
 dotenv.config();
 
@@ -13,8 +15,10 @@ app.use(express.json());
 app.use(cors({
     origin: process.env.CLIENT_URL || "*",
 }))
+// app.use(ExpressMongoSanitize());
 
 connectDB();
+RedisClient.connect();
 
 // Routes
 app.use("/api/auth", authRoutes);
