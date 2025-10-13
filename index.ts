@@ -3,7 +3,6 @@ import authRoutes from "./src/routes/auth.routes.ts";
 import cors from "cors";
 import { connectDB } from "./src/config/db.ts";
 import dotenv from "dotenv";
-import ExpressMongoSanitize from "express-mongo-sanitize";
 import {RedisClient} from "./src/services/redis.service.ts";
 
 dotenv.config();
@@ -16,8 +15,6 @@ app.use(cors({
     origin: process.env.CLIENT_URL || "*",
     credentials: true
 }));
-
-// app.use(ExpressMongoSanitize());
 
 connectDB();
 RedisClient.connect();
