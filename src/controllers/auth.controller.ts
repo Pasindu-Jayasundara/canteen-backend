@@ -3,7 +3,7 @@ import { registerUser, loginUser } from "../services/auth.service.ts";
 import { HTTP_STATUS } from "../const/http-status.const.ts";
 import { RESPONSE_MESSAGE } from "../const/response.const.ts";
 import { generateAccessToken, generateRefreshToken } from "../util/JWT_token.ts";
-import { Redis_addExpireValue, Redis_addValue, Redis_getAllValues, Redis_getValue, Redis_removeValue } from "../services/redis.service.ts";
+import { Redis_addExpireValue, Redis_addValue, Redis_deleteKey, Redis_getAllValues, Redis_getValue, Redis_removeValue } from "../services/redis.service.ts";
 import 'dotenv/config';
 import Crypto from "crypto";
 import sendEmail from "../services/email.service.ts";
@@ -32,7 +32,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const otp = Crypto.randomBytes(4).toString('hex');
-    Redis_addExpireValue(user._id.toString(), otp, 300); // OTP valid for 5 minutes
+    Redis_addExpireValue(`otp:${user._id}`, otp, 300); // OTP valid for 5 minutes
 
     sendEmail(user.universityMail, "Your OTP Code", `Your OTP code is: ${otp}`);
 
@@ -47,15 +47,15 @@ export const verifyOtp = async (req: Request, res: Response) => {
 
   const { user, otp } = req.body;
 
-  const storedOtp = await Redis_getValue(user._id.toString());
+  const storedOtp = await Redis_getValue(`otp:${user._id}`);
 
   if (storedOtp && storedOtp == otp) {
 
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
-    Redis_removeValue(user._id.toString(), otp);
-    Redis_addValue(user._id.toString(), refreshToken, 7 * 24 * 60 * 60); // Refresh token valid for 7 days
+    Redis_deleteKey(`otp:${user._id}`);
+    Redis_addValue(`refreshToken:${user._id}`, refreshToken, 7 * 24 * 60 * 60); // Refresh token valid for 7 days
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,

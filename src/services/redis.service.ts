@@ -21,9 +21,14 @@ export const Redis_addValue = async(key:string, value:string, expirationInSecond
     await RedisClient.sAdd(key, value);
 };
 
-export const Redis_addExpireValue = async(key:string, value:string, expirationInSeconds: number) : Promise<void> => {
-    await RedisClient.SETEX(key, expirationInSeconds, value);
+export const Redis_addExpireValue = async (key: string, value: string, expirationInSeconds: number): Promise<void> => {
+  await RedisClient.setEx(key, expirationInSeconds, value);
 };
+
+export const Redis_deleteKey = async (key: string): Promise<void> => {
+  await RedisClient.del(key);
+};
+
 
 export const Redis_getAllValues = async(key:string) :Promise<string[]> =>{
     return await RedisClient.SMEMBERS(key) as string[];
