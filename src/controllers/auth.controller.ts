@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { registerUser, loginUser } from "../services/auth.service.ts";
 import { HTTP_STATUS } from "../const/http-status.const.ts";
 import { RESPONSE_MESSAGE } from "../const/response.const.ts";
-import { generateAccessToken, generateRefreshToken } from "../util/JWT_token.ts";
+import { generateAccessToken, generateRefreshToken } from "../util/JWTtoken.util.ts";
 import { Redis_addExpireValue, Redis_addValue, Redis_deleteKey, Redis_getAllValues, Redis_getValue, Redis_removeValue } from "../services/redis.service.ts";
 import 'dotenv/config';
 import Crypto from "crypto";
