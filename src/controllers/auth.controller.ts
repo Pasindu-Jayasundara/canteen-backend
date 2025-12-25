@@ -64,7 +64,20 @@ export const verifyOtp = async (req: Request, res: Response) => {
       maxAge: parseInt(process.env.JWT_REFRESH_TOKEN_EXPIRES_IN_INT!), // 7 days
     });
 
-    return res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGE.LOGIN_SUCCESS, user: user, accessToken: accessToken });
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: parseInt(process.env.JWT_ACCESS_TOKEN_EXPIRES_IN!), // 5s 
+    });
+
+    res.cookie("user", JSON.stringify(user), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    return res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGE.LOGIN_SUCCESS, user: user });
   }
   res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: RESPONSE_MESSAGE.INVALID_OTP });
 };
